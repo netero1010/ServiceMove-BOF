@@ -1,4 +1,4 @@
-# BOF - Lateral Movement Technique by Abusing DLL Hijacking on Windows Perception Simulation Service
+# BOF - Lateral movement technique by abusing Windows Perception Simulation Service to achieve DLL hijacking
 ----
 ServiceMove is a POC code for an interesting lateral movement technique by abusing Windows Perception Simulation Service to achieve DLL hijacking code execution.
 
