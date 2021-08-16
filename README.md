@@ -33,7 +33,7 @@ Command: bof-servicemove target cleanup
 
 `make`
 
-**Export Functions for "hid.dl"**  
+### Export Functions for "hid.dll"  
 Ref to [exports_function_hid.txt](https://github.com/netero1010/ServiceMove-BOF/blob/main/exports_function_hid.txt)
 
 ### Demo
