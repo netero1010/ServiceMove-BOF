@@ -12,6 +12,11 @@ Windows 10 1809 or above only
 
 ### Common Line Usage
 ```
+Version: 1.0
+Author: Chris Au
+Twitter: @netero_1010
+Github: @netero1010
+
 ===General use===  
 Command: bof-servicemove target /root/hid.dll  
 
